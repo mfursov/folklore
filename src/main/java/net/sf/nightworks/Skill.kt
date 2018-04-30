@@ -1187,7 +1187,7 @@ enum class Skill(
 
     val isSpell: Boolean = spellFun != null
 
-    val skillName get() = name.toLowerCase().replace(' ', '_')
+    val skillName get() = name.toLowerCase().replace('_', ' ')
 
     fun spell_fun(level: Int, ch: CHAR_DATA, victim: CHAR_DATA, target: Int) = spellFun?.invoke(level, ch, victim, target)
 
