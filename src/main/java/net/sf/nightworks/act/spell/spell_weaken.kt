@@ -4,7 +4,6 @@ package net.sf.nightworks.act.spell
 import net.sf.nightworks.AFF_WEAKEN
 import net.sf.nightworks.DT
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.act
 import net.sf.nightworks.affect_to_char

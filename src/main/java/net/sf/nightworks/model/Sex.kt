@@ -10,7 +10,7 @@ enum class Sex(val id: Int, val title: String, val he_she: String, val him_her: 
     fun isMale() = this == Male
 
     companion object {
-        fun of(v: String, def: (s: String) -> Sex) = values().firstOrNull({ it.title == v }) ?: def(v)
-        fun of(v: Int) = values().firstOrNull({ it.ordinal == v })
+        fun of(v: String, def: (s: String) -> Sex) = values().firstOrNull { it.title == v } ?: def(v)
+        fun of(v: Int) = values().firstOrNull { it.ordinal == v }
     }
 }

@@ -17,7 +17,7 @@ enum class Align(val title: String, val lcTitle: String, val prefix: String) {
             else -> Align.Neutral
         }
 
-        fun of(v: String) = values().firstOrNull({ it.title == v })
+        fun of(v: String) = values().firstOrNull { it.title == v }
 
         fun isGood(alignment: Int) = alignment >= 350
         fun isEvil(alignment: Int) = alignment <= -350

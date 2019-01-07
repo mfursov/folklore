@@ -2,7 +2,6 @@ package net.sf.nightworks.act.spell
 
 import net.sf.nightworks.AFF_ABSORB
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.affect_to_char
 import net.sf.nightworks.is_affected
 import net.sf.nightworks.model.Affect

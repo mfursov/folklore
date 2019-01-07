@@ -19,7 +19,7 @@ enum class Liquid(val liq_name: String,
     Ale("ale", "brown", 15, 1, 8, 1, 12),
     DarkAle("dark ale", "dark", 16, 1, 8, 1, 12),
 
-    Wisky("whisky", "golden", 120, 1, 5, 0, 2),
+    Whisky("whisky", "golden", 120, 1, 5, 0, 2),
     Lemonade("lemonade", "pink", 0, 1, 9, 2, 12),
     FireBreather("firebreather", "boiling", 190, 0, 4, 0, 2),
     LocalSpecialty("local specialty", "clear", 151, 1, 3, 0, 2),

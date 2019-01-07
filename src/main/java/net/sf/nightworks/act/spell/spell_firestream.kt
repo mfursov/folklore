@@ -2,7 +2,6 @@ package net.sf.nightworks.act.spell
 
 
 import net.sf.nightworks.DT
-import net.sf.nightworks.DT.Fire
 import net.sf.nightworks.Skill
 import net.sf.nightworks.TARGET_CHAR
 import net.sf.nightworks.TO_CHAR

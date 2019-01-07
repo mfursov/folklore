@@ -8,7 +8,6 @@ import net.sf.nightworks.EX_IS_DOOR
 import net.sf.nightworks.PLR_AUTO_EXIT
 import net.sf.nightworks.PLR_HOLYLIGHT
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_CHAR
 import net.sf.nightworks.TO_NOTVICT
 import net.sf.nightworks.TO_VICT

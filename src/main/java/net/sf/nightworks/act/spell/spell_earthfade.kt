@@ -6,7 +6,6 @@ import net.sf.nightworks.SECT_AIR
 import net.sf.nightworks.SECT_WATER_NO_SWIM
 import net.sf.nightworks.SECT_WATER_SWIM
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.act
 import net.sf.nightworks.affect_to_char

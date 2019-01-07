@@ -13,8 +13,8 @@ enum class PrimeStat(val shortName: String) {
     Charisma("cha");
 
     companion object {
-        fun of(v: String) = values().firstOrNull({ it.shortName == v })
-        fun of(id: Int) = values().firstOrNull({ it.ordinal == id })
+        fun of(v: String) = values().firstOrNull { it.shortName == v }
+        fun of(id: Int) = values().firstOrNull { it.ordinal == id }
         fun statsOf(v: Int) = StatsMap(values().associate { s -> Pair(s, v) }.toMutableMap())
     }
 }

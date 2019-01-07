@@ -4,7 +4,6 @@ import net.sf.nightworks.ACT_UNDEAD
 import net.sf.nightworks.AFF_CORRUPTION
 import net.sf.nightworks.DT
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_CHAR
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.act

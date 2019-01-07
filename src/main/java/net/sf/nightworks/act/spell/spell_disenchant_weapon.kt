@@ -13,12 +13,11 @@ import net.sf.nightworks.extract_obj
 import net.sf.nightworks.model.CHAR_DATA
 import net.sf.nightworks.model.ItemType
 import net.sf.nightworks.model.Obj
-import net.sf.nightworks.model.Wear
-import net.sf.nightworks.util.randomPercent
 import net.sf.nightworks.send_to_char
 import net.sf.nightworks.util.IS_SET
 import net.sf.nightworks.util.REMOVE_BIT
 import net.sf.nightworks.util.URANGE
+import net.sf.nightworks.util.randomPercent
 
 fun spell_disenchant_weapon(level: Int, ch: CHAR_DATA, obj: Obj) {
     if (obj.item_type != ItemType.Weapon) {

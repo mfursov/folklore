@@ -5,8 +5,8 @@ import java.io.File
 import java.io.FileReader
 import java.io.IOException
 
-private val MAX_WORD_LENGTH = 256
-private val END_OF_STREAM_CHAR = (-1).toChar()
+private const val MAX_WORD_LENGTH = 256
+private const val END_OF_STREAM_CHAR = (-1).toChar()
 
 class DikuTextFile @Throws(IOException::class)
 constructor(private val file: File) {

@@ -2,7 +2,6 @@ package net.sf.nightworks.act.spell
 
 import net.sf.nightworks.AFF_DETECT_UNDEAD
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_CHAR
 import net.sf.nightworks.act
 import net.sf.nightworks.affect_to_char

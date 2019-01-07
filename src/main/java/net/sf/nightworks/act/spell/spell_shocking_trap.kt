@@ -3,7 +3,6 @@ package net.sf.nightworks.act.spell
 
 import net.sf.nightworks.AFF_ROOM_SHOCKING
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.TO_ROOM_AFFECTS
 import net.sf.nightworks.act

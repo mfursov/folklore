@@ -45,8 +45,7 @@ import java.nio.channels.Selector
 import java.nio.channels.ServerSocketChannel
 import java.nio.channels.SocketChannel
 import java.nio.channels.spi.SelectorProvider
-import java.util.Date
-import java.util.Formatter
+import java.util.*
 
 private val echo_off_telnet_command = byteArrayOf(IAC, WILL, TELOPT_ECHO)
 private val echo_on_telnet_command = byteArrayOf(IAC, WONT, TELOPT_ECHO)
@@ -101,14 +100,13 @@ fun nightworks_engine() {
             handle_output()
 
             wait_pulse(periodStart)
-
         }
     }
 }
 
 private fun wait_pulse(periodStart: Long) {
     current_time = currentTimeSeconds()
-    val waitMillis = (periodStart + 1000 / PULSE_PER_SECOND) - current_time * 1000L
+    val waitMillis = (periodStart * 1000 + 1000 / PULSE_PER_SECOND) - current_time * 1000L
     if (waitMillis > 0) {
         try {
             Thread.sleep(waitMillis)
@@ -459,7 +457,7 @@ private fun bust_a_prompt(PC: PC) {
                 if (doors.isEmpty()) "none" else doors
             }
             'c' -> "\n"
-        // added from here by KIO
+            // added from here by KIO
             'n' -> ch.name
             'S' -> upfirst(ch.sex.title)
             'y' -> if (ch.hit >= 0) (100 * ch.hit / Math.max(1, ch.max_hit)).toString() + "%%" else "BAD!!"
@@ -737,7 +735,7 @@ private fun nanny(con: Connection, args: String) {
                 send_to_char("The gods frown upon your actions.\n", ch)
             }
         }
-    /* RT code for breaking link */
+        /* RT code for breaking link */
         ConnectionState.CON_BREAK_CONNECT -> when (c0) {
             'Y' -> {
                 val ch = con.ch!!

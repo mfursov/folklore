@@ -11,6 +11,6 @@ enum class Language(val id: Int, val title: String) {
     Cat(7, "cat");
 
     companion object {
-        fun of(v: String) = values().firstOrNull({ it.title == v })
+        fun of(v: String) = values().firstOrNull { it.title == v }
     }
 }

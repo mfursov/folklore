@@ -2,13 +2,13 @@ package net.sf.nightworks.act.db
 
 import net.sf.nightworks.Index
 import net.sf.nightworks.model.Affect
-import java.io.FileWriter
+import java.io.FileOutputStream
 import java.io.IOException
-import java.util.Formatter
+import java.util.*
 
 fun do_dump() {
     try {
-        var fp = FileWriter("mem.dmp", false)
+        var fp = FileOutputStream("mem.dmp", false)
         try {
             // report use of data structures
 
@@ -72,7 +72,7 @@ fun do_dump() {
         }
 
         /* start printing out mobile data */
-        fp = FileWriter("mob.dmp", false)
+        fp = FileOutputStream("mob.dmp", false)
         try {
             val f = Formatter(fp)
             f.out().append("\nMobile Analysis\n")
@@ -86,7 +86,7 @@ fun do_dump() {
         }
 
         /* start printing out object data */
-        fp = FileWriter("obj.dmp", false)
+        fp = FileOutputStream("obj.dmp", false)
         try {
             val f = Formatter(fp)
             f.out().append("\nObject Analysis\n")

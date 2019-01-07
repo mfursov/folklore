@@ -7,7 +7,6 @@ import net.sf.nightworks.DICE_TYPE
 import net.sf.nightworks.Index
 import net.sf.nightworks.MOB_VNUM_ELM_WATER
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.act
 import net.sf.nightworks.affect_to_char
@@ -50,7 +49,7 @@ fun spell_summon_water_elm(level: Int, ch: CHAR_DATA) {
     }
 
     val elm = create_mobile(get_mob_index_nn(MOB_VNUM_ELM_WATER))
-    elm.perm_stat.fill { _ -> Math.min(25, 15 + ch.level / 10) }
+    elm.perm_stat.fill { Math.min(25, 15 + ch.level / 10) }
     elm.perm_stat[PrimeStat.Strength] += 3
     elm.perm_stat[PrimeStat.Intelligence] -= 1
     elm.perm_stat[PrimeStat.Constitution] += 2

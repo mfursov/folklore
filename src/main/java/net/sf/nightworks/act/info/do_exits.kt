@@ -25,13 +25,10 @@ fun do_exits(ch: CHAR_DATA, argument: String) {
     }
 
     val buf = TextBuffer()
-    if (fAuto) {
-        buf.append("{B[Exits:")
-
-    } else if (IS_IMMORTAL(ch)) {
-        buf.sprintf("Obvious exits from room %d:\n", ch.room.vnum)
-    } else {
-        buf.sprintf("Obvious exits:\n")
+    when {
+        fAuto -> buf.append("{B[Exits:")
+        IS_IMMORTAL(ch) -> buf.sprintf("Obvious exits from room %d:\n", ch.room.vnum)
+        else -> buf.sprintf("Obvious exits:\n")
     }
 
     var found = false

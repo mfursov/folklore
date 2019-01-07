@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 import net.sf.nightworks.OBJ_VNUM_EYED_SWORD
 import net.sf.nightworks.OFF_AREA_ATTACK
 import net.sf.nightworks.QUEST_EYE

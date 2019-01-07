@@ -1,13 +1,31 @@
+@file:Suppress("FunctionName")
+
 package net.sf.nightworks.act.obj
 
-import net.sf.nightworks.*
+import net.sf.nightworks.AFF_FLYING
+import net.sf.nightworks.AFF_HASTE
+import net.sf.nightworks.RES_COLD
+import net.sf.nightworks.RES_FIRE
+import net.sf.nightworks.Skill
+import net.sf.nightworks.TO_CHAR
+import net.sf.nightworks.TO_RESIST
+import net.sf.nightworks.TO_ROOM
+import net.sf.nightworks.WEAPON_KATANA
+import net.sf.nightworks.act
+import net.sf.nightworks.affect_to_char
+import net.sf.nightworks.get_skill
+import net.sf.nightworks.is_affected
 import net.sf.nightworks.model.Affect
 import net.sf.nightworks.model.Apply
 import net.sf.nightworks.model.CHAR_DATA
 import net.sf.nightworks.model.ItemType
-import net.sf.nightworks.model.Obj
 import net.sf.nightworks.model.OPROG_FUN_WEAR
+import net.sf.nightworks.model.Obj
 import net.sf.nightworks.model.Pos
+import net.sf.nightworks.obj_from_char
+import net.sf.nightworks.obj_to_room
+import net.sf.nightworks.send_to_char
+import net.sf.nightworks.unequip_char
 import net.sf.nightworks.util.IS_WEAPON_STAT
 
 fun create_wear_prog(name: String): OPROG_FUN_WEAR {

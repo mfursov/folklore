@@ -4,7 +4,6 @@ import net.sf.nightworks.AFF_CHARM
 import net.sf.nightworks.Index
 import net.sf.nightworks.MOB_VNUM_BEAR
 import net.sf.nightworks.Skill
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ROOM
 import net.sf.nightworks.act
 import net.sf.nightworks.affect_to_char
@@ -13,13 +12,13 @@ import net.sf.nightworks.clone_mobile
 import net.sf.nightworks.count_charmed
 import net.sf.nightworks.create_mobile
 import net.sf.nightworks.get_mob_index_nn
-import net.sf.nightworks.util.interpolate
 import net.sf.nightworks.is_affected
 import net.sf.nightworks.model.Affect
 import net.sf.nightworks.model.CHAR_DATA
 import net.sf.nightworks.send_to_char
 import net.sf.nightworks.util.IS_AFFECTED
 import net.sf.nightworks.util.SET_BIT
+import net.sf.nightworks.util.interpolate
 
 //todo: spell or skill?
 

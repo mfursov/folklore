@@ -32,7 +32,7 @@ import net.sf.nightworks.util.atoi
 import net.sf.nightworks.util.eq
 import net.sf.nightworks.util.is_number
 import net.sf.nightworks.util.one_argument
-import java.util.HashSet
+import java.util.*
 
 fun do_who(ch: CHAR_DATA, argument: String) {
     var rest = argument
@@ -138,7 +138,7 @@ fun do_who(ch: CHAR_DATA, argument: String) {
 
         if (eq(arg, "tattoo")) {
             if (get_eq_char(ch, Wear.Tattoo) == null) {
-                send_to_char("You haven't got a tattoo yetl!\n", ch)
+                send_to_char("You haven't got a tattoo yet!\n", ch)
                 return
             } else {
                 fTattoo = true

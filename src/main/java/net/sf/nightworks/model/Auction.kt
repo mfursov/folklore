@@ -13,7 +13,7 @@ class Auction(
         /** a pointer to the buyer - which may NOT quit */
         var buyer: CHAR_DATA? = null,
 
-        /** last bet - or 0 if noone has bet anything */
+        /** last bet - or 0 if no one has bet anything */
         var bet: Int = 0,
 
         /** 1,2, sold */

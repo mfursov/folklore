@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName", "FunctionName", "LocalVariableName")
+
 package net.sf.nightworks
 
 import net.sf.nightworks.Tables.act_flags
@@ -10,66 +12,15 @@ import net.sf.nightworks.Tables.res_flags
 import net.sf.nightworks.Tables.vuln_flags
 import net.sf.nightworks.act.mob.assign_mob_prog
 import net.sf.nightworks.act.obj.assign_obj_prog
-import net.sf.nightworks.model.Apply
-import net.sf.nightworks.model.Affect
-import net.sf.nightworks.model.Area
-import net.sf.nightworks.model.Align
-import net.sf.nightworks.model.AttackType
-import net.sf.nightworks.model.CHAR_DATA
-import net.sf.nightworks.model.Clan
-import net.sf.nightworks.model.ConnectionState
-import net.sf.nightworks.model.EXIT_DATA
-import net.sf.nightworks.model.EXTRA_DESC_DATA
-import net.sf.nightworks.model.Ethos
-import net.sf.nightworks.model.HELP_DATA
-import net.sf.nightworks.model.ItemType
-import net.sf.nightworks.model.KILL_DATA
-import net.sf.nightworks.model.Language
-import net.sf.nightworks.model.Liquid
-import net.sf.nightworks.model.MOB_INDEX_DATA
-import net.sf.nightworks.model.Obj
-import net.sf.nightworks.model.ObjProto
-import net.sf.nightworks.model.Pos
-import net.sf.nightworks.model.Pose
-import net.sf.nightworks.model.PrimeStat
-import net.sf.nightworks.model.RESET_DATA
-import net.sf.nightworks.model.ROOM_INDEX_DATA
-import net.sf.nightworks.model.Shop
-import net.sf.nightworks.model.Sex
-import net.sf.nightworks.model.Size
-import net.sf.nightworks.model.SG
-import net.sf.nightworks.model.TimeData
-import net.sf.nightworks.model.WeatherInfo
-import net.sf.nightworks.model.Social
-import net.sf.nightworks.model.WeaponType
-import net.sf.nightworks.model.Wear
-import net.sf.nightworks.model.Wiznet
-import net.sf.nightworks.util.DikuTextFile
-import net.sf.nightworks.util.IS_AFFECTED
-import net.sf.nightworks.util.IS_AWAKE
-import net.sf.nightworks.util.IS_SET
-import net.sf.nightworks.util.REMOVE_BIT
-import net.sf.nightworks.util.SET_BIT
-import net.sf.nightworks.util.URANGE
-import net.sf.nightworks.util.bug
-import net.sf.nightworks.util.dice
-import net.sf.nightworks.util.eq
-import net.sf.nightworks.util.exit
-import net.sf.nightworks.util.log_string
-import net.sf.nightworks.util.number_fuzzy
-import net.sf.nightworks.util.number_range
-import net.sf.nightworks.util.one_argument
-import net.sf.nightworks.util.random
-import net.sf.nightworks.util.randomPercent
-import net.sf.nightworks.util.startsWith
-import net.sf.nightworks.util.upfirst
+import net.sf.nightworks.model.*
+import net.sf.nightworks.util.*
 import java.io.File
 import java.io.IOException
 
 var help_greeting = ""
 val time_info = TimeData()
 val weather = WeatherInfo()
-val kill_table = Array(MAX_LEVEL, { KILL_DATA() })
+val kill_table = Array(MAX_LEVEL) { KILL_DATA() }
 
 var top_affect: Int = 0
 var top_ed: Int = 0
@@ -201,7 +152,7 @@ private fun read_pcrace(fp: DikuTextFile, race: Race) {
             "MaxStats" -> for (s in PrimeStat.values()) race.max_stats[s] = fp.int()
             "Points" -> race.points = fp.int()
             "PracBonus" -> race.prac_bonus = fp.int()
-            "Size" -> race.size = Size.of(fp.word(), { bugf(fp, "Param: $it") })!!
+            "Size" -> race.size = Size.of(fp.word()) { bugf(fp, "Param: $it") }!!
             "Slang" -> race.language = Language.of(fp.word())!!
             "ShortName" -> race.who_name = fp.string()
             "Skill" -> fp.string_eol()
@@ -240,7 +191,7 @@ private fun read_classes() {
                     clazz.poses.add(pose)
                 }
                 "#$" -> break@label
-                else -> bugf(fp, "Unknown token in clazz file:" + word)
+                else -> bugf(fp, "Unknown token in clazz file: $word")
             }
         }
     }
@@ -275,7 +226,7 @@ private fun read_class(fp: DikuTextFile): Clazz {
                 skill.rating[clazz.id] = rating
                 skill.mod[clazz.id] = mod
             }
-            "Sex" -> clazz.sex = Sex.of(fp.word(), { bugf(fp, "Param: $it") })
+            "Sex" -> clazz.sex = Sex.of(fp.word()) { bugf(fp, "Param: $it") }
             "SkillAdept" -> clazz.skill_adept = fp.int()
             "SchoolWeapon" -> clazz.weapon = fp.int()
             "ShortName" -> clazz.who_name = fp.string()
@@ -285,9 +236,9 @@ private fun read_class(fp: DikuTextFile): Clazz {
             "Title" -> {
                 val level = fp.int()
                 if (level < 0 || level > MAX_LEVEL) {
-                    throw RuntimeException("load_class: invalid level: " + level)
+                    throw RuntimeException("load_class: invalid level: $level")
                 }
-                val sex = Sex.of(fp.word(), { bugf(fp, "sex: $it") })
+                val sex = Sex.of(fp.word()) { bugf(fp, "sex: $it") }
                 val title = fp.string()
                 if (sex.isMale()) {
                     clazz.maleTitles[level] = title
@@ -314,14 +265,14 @@ private fun read_class_pose(fp: DikuTextFile): Pose {
 }
 
 private fun setTimeAndWeather() {
-    val lhour = (current_time - 650336715L).toInt() / (PULSE_TICK / PULSE_PER_SCD)
+    val hour = (current_time - 650336715L).toInt() / (PULSE_TICK / PULSE_PER_SCD)
     time_info.minute = 0
-    time_info.hour = lhour % 24
-    val lday = lhour / 24
-    time_info.day = lday % 35
-    val lmonth = lday / 35
-    time_info.month = lmonth % 17
-    time_info.year = lmonth / 17
+    time_info.hour = hour % 24
+    val day = hour / 24
+    time_info.day = day % 35
+    val month = day / 35
+    time_info.month = month % 17
+    time_info.year = month / 17
 
     weather.sunlight = when {
         time_info.hour < 5 -> SUN_DARK
@@ -458,7 +409,7 @@ private fun load_old_obj(fp: DikuTextFile) {
 
         pObjIndex.material = ""
 
-        pObjIndex.item_type = ItemType.of(fp.int(), { bugf(fp, "itemType: $it") })
+        pObjIndex.item_type = ItemType.of(fp.int()) { bugf(fp, "itemType: $it") }
         pObjIndex.extra_flags = fp.long()
         pObjIndex.wear_flags = fp.long()
         pObjIndex.value[0] = fp.long()
@@ -491,7 +442,7 @@ private fun load_old_obj(fp: DikuTextFile) {
                     paf.type = Skill.reserved
                     paf.level = 20 /* RT temp fix */
                     paf.duration = -1
-                    paf.location = Affect.of(fp.int(), { bugf(fp, "affect: $it") })
+                    paf.location = Affect.of(fp.int()) { bugf(fp, "affect: $it") }
                     paf.modifier = fp.int()
                     paf.next = pObjIndex.affected
                     pObjIndex.affected = paf
@@ -532,7 +483,7 @@ private fun load_old_obj(fp: DikuTextFile) {
             else -> {
             }
         }
-        Index.OBJ_INDEX.put(vnum, pObjIndex)
+        Index.OBJ_INDEX[vnum] = pObjIndex
     }
 }
 
@@ -656,7 +607,7 @@ fun load_rooms(fp: DikuTextFile, area: Area) {
 
         pRoomIndex.sector_type = fp.int()
         if (pRoomIndex.sector_type < 0) {
-            log_string("Invalid room sector_type=" + pRoomIndex.sector_type + " room vnum:" + pRoomIndex.vnum)
+            log_string("Invalid room sector_type=${pRoomIndex.sector_type} room vnum: ${pRoomIndex.vnum}")
             pRoomIndex.sector_type = 0
         }
 
@@ -687,7 +638,7 @@ fun load_rooms(fp: DikuTextFile, area: Area) {
                 'D' -> {
                     door = fp.int()
                     if (door < 0 || door > 5) {
-                        bugf(fp, "Fread_rooms: vnum %d has bad door number.", vnum)
+                        bugf(fp, "load_rooms: vnum %d has bad door number.", vnum)
                     }
 
                     val pexit = EXIT_DATA()
@@ -724,7 +675,7 @@ fun load_rooms(fp: DikuTextFile, area: Area) {
                 else -> bugf(fp, "Load_rooms: vnum %d has flag not 'DES'.", vnum)
             }
         }
-        Index.ROOM_INDEX.put(vnum, pRoomIndex)
+        Index.ROOM_INDEX[vnum] = pRoomIndex
     }
 }
 
@@ -1602,7 +1553,7 @@ fun get_extra_desc(name: String, edArg: EXTRA_DESC_DATA?): String? {
  * Translates mob virtual number to its mob index struct.
  * Hash table lookupRace.
  */
-fun get_mob_index_nn(vnum: Int): MOB_INDEX_DATA = get_mob_index(vnum) ?: throw IllegalArgumentException("Mob not found: " + vnum)
+fun get_mob_index_nn(vnum: Int): MOB_INDEX_DATA = get_mob_index(vnum) ?: throw IllegalArgumentException("Mob not found: $vnum")
 
 fun get_mob_index(vnum: VNum): MOB_INDEX_DATA? = Index.MOB_INDEX[vnum]
 
@@ -1610,7 +1561,7 @@ fun get_mob_index(vnum: VNum): MOB_INDEX_DATA? = Index.MOB_INDEX[vnum]
  * Translates mob virtual number to its obj index struct.
  * Hash table lookupRace.
  */
-fun get_obj_index_nn(vnum: Int): ObjProto = get_obj_index(vnum) ?: throw IllegalArgumentException("Object not found: " + vnum)
+fun get_obj_index_nn(vnum: Int): ObjProto = get_obj_index(vnum) ?: throw IllegalArgumentException("Object not found: $vnum")
 
 fun get_obj_index(vnum: Int): ObjProto? = Index.OBJ_INDEX[vnum]
 
@@ -1618,7 +1569,7 @@ fun get_obj_index(vnum: Int): ObjProto? = Index.OBJ_INDEX[vnum]
  * Translates mob virtual number to its room index struct.
  * Hash table lookupRace.
  */
-fun get_room_index_nn(vnum: Int): ROOM_INDEX_DATA = get_room_index(vnum) ?: throw IllegalArgumentException("Room not found: " + vnum)
+fun get_room_index_nn(vnum: Int): ROOM_INDEX_DATA = get_room_index(vnum) ?: throw IllegalArgumentException("Room not found: $vnum")
 
 fun get_room_index(vnum: Int): ROOM_INDEX_DATA? = Index.ROOM_INDEX[vnum]
 
@@ -1673,7 +1624,6 @@ private fun load_limited_objects() {
                 when (letter) {
                     'L' -> if (!fReadLevel) {
                         val word = fp.word()
-
                         if (eq(word, "evl") || eq(word, "ev") || eq(word, "evel")) {
                             val l = fp.int()
                             fReadLevel = true
@@ -1683,7 +1633,6 @@ private fun load_limited_objects() {
                     }
                     'P' -> {
                         val word = fp.word()
-
                         if (eq(word, "layLog")) {
                             fp.int()    /* read the version */
                             while (true) {
@@ -1780,7 +1729,7 @@ private fun load_socials() {
             "notfound_char" -> social.not_found_char = fp.string()
             "noarg_char" -> social.noarg_char = fp.string()
             "noarg_room" -> social.noarg_room = fp.string()
-            "min_pos" -> social.minPos = Pos.of(fp.word(), { bugf(fp, "pos: $it") })
+            "min_pos" -> social.minPos = Pos.of(fp.word()) { bugf(fp, "pos: $it") }
             "self_char" -> social.self_char = fp.string()
             "self_room" -> social.self_room = fp.string()
             else -> bugf(fp, "Loading socials: unknown keyword: $word")
@@ -1846,7 +1795,7 @@ private fun load_mobiles(fp: DikuTextFile) {
         pMobIndex.damage[DICE_TYPE] = fp.int()
         fp.fread_letter()
         pMobIndex.damage[DICE_BONUS] = fp.int()
-        pMobIndex.attack = AttackType.of(fp.word(), { bugf(fp, "attack: $it") })
+        pMobIndex.attack = AttackType.of(fp.word()) { bugf(fp, "attack: $it") }
 
         /* read armor class */
         pMobIndex.ac[AC_PIERCE] = fp.int() * 10
@@ -1861,16 +1810,16 @@ private fun load_mobiles(fp: DikuTextFile) {
         pMobIndex.vuln_flags = fp.long() or pMobIndex.race.vuln
 
         /* vital statistics */
-        pMobIndex.start_pos = Pos.of(fp.word(), { bugf(fp, "pos: $it") })
-        pMobIndex.default_pos = Pos.of(fp.word(), { bugf(fp, "pos: $it") })
+        pMobIndex.start_pos = Pos.of(fp.word()) { bugf(fp, "pos: $it") }
+        pMobIndex.default_pos = Pos.of(fp.word()) { bugf(fp, "pos: $it") }
         val sexStr = fp.word()
-        pMobIndex.sexOption = if (sexStr == "either") 3 else Sex.of(sexStr, { bugf(fp, "sex: $sexStr") }).ordinal
+        pMobIndex.sexOption = if (sexStr == "either") 3 else Sex.of(sexStr) { bugf(fp, "sex: $sexStr") }.ordinal
 
         pMobIndex.wealth = fp.int()
 
         pMobIndex.form = fp.long() or pMobIndex.race.form
         pMobIndex.parts = fp.long() or pMobIndex.race.parts
-        pMobIndex.size = Size.of(fp.word(), { bugf(fp, "param: $it") })!!
+        pMobIndex.size = Size.of(fp.word()) { bugf(fp, "param: $it") }!!
         pMobIndex.material = fp.word()
         pMobIndex.progtypes = 0
 
@@ -1898,7 +1847,7 @@ private fun load_mobiles(fp: DikuTextFile) {
             }
         }
 
-        Index.MOB_INDEX.put(vnum, pMobIndex)
+        Index.MOB_INDEX[vnum] = pMobIndex
         val kill_data = kill_table[URANGE(0, pMobIndex.level, MAX_LEVEL - 1)]
         kill_data.number++
     }
@@ -1930,15 +1879,15 @@ private fun load_objects(fp: DikuTextFile) {
         pObj.description = fp.string()
         pObj.material = fp.string()
 
-        pObj.item_type = ItemType.of(fp.word(), { bugf(fp, "itemType: $it") })
+        pObj.item_type = ItemType.of(fp.word()) { bugf(fp, "itemType: $it") }
         pObj.extra_flags = fp.long()
         pObj.wear_flags = fp.long()
         when (pObj.item_type) {
             ItemType.Weapon -> {
-                pObj.weaponType = WeaponType.of(fp.word(), { bugf(fp, "weapon: $it") })
+                pObj.weaponType = WeaponType.of(fp.word()) { bugf(fp, "weapon: $it") }
                 pObj.value[1] = fp.long()
                 pObj.value[2] = fp.long()
-                pObj.value[3] = AttackType.of(fp.word(), { bugf(fp, "attack: $it") }).ordinal.toLong()
+                pObj.value[3] = AttackType.of(fp.word()) { bugf(fp, "attack: $it") }.ordinal.toLong()
                 pObj.value[4] = fp.long()
             }
             ItemType.Container -> {
@@ -2004,7 +1953,7 @@ private fun load_objects(fp: DikuTextFile) {
                 paf.type = Skill.reserved
                 paf.level = pObj.level
                 paf.duration = -1
-                paf.location = Affect.of(fp.int(), { bugf(fp, "affect: $it") })
+                paf.location = Affect.of(fp.int()) { bugf(fp, "affect: $it") }
                 paf.modifier = fp.int()
                 paf.next = pObj.affected
                 pObj.affected = paf
@@ -2023,7 +1972,7 @@ private fun load_objects(fp: DikuTextFile) {
                 paf.type = Skill.reserved
                 paf.level = pObj.level
                 paf.duration = -1
-                paf.location = Affect.of(fp.int(),{ bugf(fp, "affect: $it") } )
+                paf.location = Affect.of(fp.int()) { bugf(fp, "affect: $it") }
                 paf.modifier = fp.int()
                 paf.bitvector = fp.long()
                 paf.next = pObj.affected
@@ -2041,7 +1990,7 @@ private fun load_objects(fp: DikuTextFile) {
                 break
             }
         }
-        Index.OBJ_INDEX.put(vnum, pObj)
+        Index.OBJ_INDEX[vnum] = pObj
     }
 }
 

@@ -8,7 +8,6 @@ import net.sf.nightworks.get_obj_carry
 import net.sf.nightworks.model.CHAR_DATA
 import net.sf.nightworks.model.ItemType
 import net.sf.nightworks.model.Obj
-import net.sf.nightworks.model.Wear
 import net.sf.nightworks.send_to_char
 import net.sf.nightworks.util.one_argument
 

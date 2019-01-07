@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package net.sf.nightworks.act.mob
 
 import create_greet_prog
@@ -9,9 +11,9 @@ import net.sf.nightworks.MPROG_FIGHT
 import net.sf.nightworks.MPROG_GIVE
 import net.sf.nightworks.MPROG_GREET
 import net.sf.nightworks.MPROG_SPEECH
-import net.sf.nightworks.util.bug
 import net.sf.nightworks.model.MOB_INDEX_DATA
 import net.sf.nightworks.util.SET_BIT
+import net.sf.nightworks.util.bug
 import java.lang.System.exit
 
 fun assign_mob_prog(mobindex: MOB_INDEX_DATA, progtype: String, name: String) {

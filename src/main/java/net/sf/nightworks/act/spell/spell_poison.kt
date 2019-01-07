@@ -7,7 +7,6 @@ import net.sf.nightworks.ITEM_BLESS
 import net.sf.nightworks.ITEM_BURN_PROOF
 import net.sf.nightworks.Skill
 import net.sf.nightworks.TARGET_OBJ
-import net.sf.nightworks.TO_AFFECTS
 import net.sf.nightworks.TO_ALL
 import net.sf.nightworks.TO_CHAR
 import net.sf.nightworks.TO_ROOM
